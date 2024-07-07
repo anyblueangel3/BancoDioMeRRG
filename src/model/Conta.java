@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Conta {
+
     private int numeroConta;
     private double saldo;
     private List<Lancamento> lancamentos;
@@ -33,4 +34,5 @@ public class Conta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
 }

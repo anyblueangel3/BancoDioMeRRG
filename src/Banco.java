@@ -1,5 +1,6 @@
 import Telas.TelaDeposita;
 import model.Cliente;
+import model.Conta;
 import model.Lancamento;
 
 import javax.swing.*;
@@ -13,17 +14,19 @@ public class Banco {
 
     public List<Cliente> clientes;
 
+    public static Banco bb;
+
     public Banco() {
 
         this.clientes = new ArrayList<>();
+        bb = new Banco();
 
     }
 
     public static void main(String[] args) {
 
-        Banco bb = new Banco();
-
         bb.menuOpcoes();
+
     }
 
     private void menuOpcoes() {
@@ -36,7 +39,8 @@ public class Banco {
         // Cria um painel para os botões usando BoxLayout
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0)); // Adiciona um espaçamento à esquerda de 25 pixels
+        // Adiciona um espaçamento à esquerda e à direita
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
 
         // Cria os botões
         JButton btnDepositar = new JButton("1 - Depositar");
@@ -103,12 +107,29 @@ public class Banco {
         frame.setVisible(true);
     }
 
-    public void depositar(int conta, double valor) {
-        // TODO Implemente.
+    public void depositar(int numeroConta, double valor) {
+        Deposito dp = new Deposito();
+        bb.clientes = dp.fazerDeposito(bb, numeroConta, valor);
     }
 
     public void fecharPrograma() {
         System.exit(0);
+    }
+
+    public Conta getNumeroConta(int numeroConta) {
+        for (Cliente cliente : clientes) {
+            Optional<Conta> contaOptional = cliente.getContas().stream()
+                    .filter(conta -> conta.getNumeroConta() == numeroConta)
+                    .findFirst();
+            if (contaOptional.isPresent()) {
+                return contaOptional.get();
+            }
+        }
+        return null; // Retorna null se a conta não for encontrada
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
     }
 
 

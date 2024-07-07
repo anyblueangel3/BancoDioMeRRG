@@ -15,4 +15,8 @@ public class Cliente {
         this.numeroCliente += 1;
     }
 
+    public List<Conta> getContas() {
+        return contas;
+    }
+
 }
