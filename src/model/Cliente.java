@@ -9,9 +9,9 @@ public class Cliente {
     private List<Conta> contas;
     private String nome;
 
-    public Cliente() {
+    public Cliente(int conta, String nome) {
         this.contas = new ArrayList<>();
-        this.nome = "";
+        this.nome = nome;
         this.numeroCliente += 1;
     }
 

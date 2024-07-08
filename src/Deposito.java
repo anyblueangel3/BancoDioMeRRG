@@ -2,6 +2,7 @@ import model.Cliente;
 import model.Conta;
 import model.Lancamento;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,10 @@ public class Deposito {
 
         } else {
             // Exibe mensagem de conta não encontrada (opcional)
-            System.out.println("Conta não encontrada.");
+            JOptionPane.showMessageDialog(null,
+                    "Conta não encontrada.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);;
         }
 
         return bb.getClientes();

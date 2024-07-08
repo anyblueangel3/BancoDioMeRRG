@@ -1,7 +1,5 @@
-import Telas.TelaDeposita;
 import model.Cliente;
 import model.Conta;
-import model.Lancamento;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,17 +17,19 @@ public class Banco {
     public Banco() {
 
         this.clientes = new ArrayList<>();
-        bb = new Banco();
 
     }
 
     public static void main(String[] args) {
+
+        bb = new Banco();
 
         bb.menuOpcoes();
 
     }
 
     private void menuOpcoes() {
+
         // Cria a janela principal
         JFrame frame = new JFrame("Menu de Opções");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,44 +50,99 @@ public class Banco {
         JButton btnFecharPrograma = new JButton("5 - Fechar programa");
 
         // Adiciona ação aos botões
-        btnDepositar.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            TelaDeposita td = new TelaDeposita();
-            JFrame frame2 = new JFrame("Depositar");
-            frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame2.add(td.getPanel());
-            frame2.pack();
-            frame2.setLocationRelativeTo(null); // Centraliza o JFrame na tela
-            frame2.setVisible(true);
+        btnDepositar.addActionListener(e -> {
 
-            int conta = Integer.parseInt(td.getConta());
-            double valor = Double.parseDouble(td.getValor());
+            int conta = 0;
+            double valor = 0;
 
-            depositar(conta, valor);
-        }));
-
-        btnSacar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //sacar();
+            try {
+                conta = Integer
+                        .parseInt(JOptionPane.showInputDialog
+                                (null, "Digite o número da conta do cliente:"));
+                valor = Double
+                        .parseDouble(JOptionPane.showInputDialog
+                                (null, "Digite o valor do depósito:"));
+            } catch (Exception erro) {
+                System.out.println("Errrrroooooo...: " + erro.toString());
             }
+
+            if(conta != 0) {
+                depositar(conta, valor);
+            }
+
         });
 
-        btnTransferir.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //transferir();
+        btnSacar.addActionListener(e -> {
+
+            int conta = 0;
+            double valor = 0;
+
+            try {
+                conta = Integer
+                        .parseInt(JOptionPane.showInputDialog
+                                (null, "Digite o número da conta do cliente:"));
+                valor = Double
+                        .parseDouble(JOptionPane.showInputDialog
+                                (null, "Digite o valor do saque:"));
+            } catch (Exception erro) {
+                System.out.println("Errrrroooooo...: " + erro.toString());
             }
+            if(conta != 0) {
+                sacar(conta, valor);
+            }
+
         });
 
-        btnAbrirConta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //abrirConta();
+        btnTransferir.addActionListener(e -> {
+
+            int contaSacado = 0;
+            int contaCreditado = 0;
+            double valor = 0;
+
+            try {
+                contaSacado = Integer
+                        .parseInt(JOptionPane.showInputDialog
+                                (null, "Digite o número da conta do cliente que será sacado: "));
+
+                contaCreditado = Integer
+                        .parseInt(JOptionPane.showInputDialog
+                                (null, "Digite o número da conta do cliente que será creditado: "));
+
+                valor = Double
+                        .parseDouble(JOptionPane.showInputDialog
+                                (null, "Digite o valor da Transferência: "));
+            } catch (Exception erro) {
+                System.out.println("Errrrroooooo...: " + erro.toString());
             }
+
+            if(contaSacado != 0 && contaCreditado !=) {
+                transferir(contaSacado, contaCreditado, valor);
+            } else { JOptionPane.showMessageDialog(null,
+                    "Número de conta inválido.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            };
+
         });
 
-        btnFecharPrograma.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fecharPrograma();
+        btnAbrirConta.addActionListener(e -> {
+
+            int numeroCliente = 0
+            int conta = 0;
+            String nomeCliente = "";
+
+            try {
+                numeroCliente = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número do cliente: "));
+                conta = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número da conta: "));
+                nomeCliente = JOptionPane.showInputDialog(null, "Digite o nome do cliente:");
+            } catch (Exception erro){
+                System.out.println("Errrrroooooo...: " + erro.toString());
             }
+
+            abrirConta(conta, numeroCliente);
         });
+
+        btnFecharPrograma.addActionListener(e -> fecharPrograma());
 
         // Adiciona os botões ao painel com uma linha vazia entre eles
         panel.add(btnDepositar);
@@ -112,8 +167,22 @@ public class Banco {
         bb.clientes = dp.fazerDeposito(bb, numeroConta, valor);
     }
 
-    public void fecharPrograma() {
-        System.exit(0);
+    public void sacar(int numeroConta, double valor) {
+        Saque sq = new Saque();
+        bb.clientes = sq.fazerSaque(bb, numeroConta, valor);
+    }
+
+    public void transferir(int numeroContaSacar, int numeroContaDepositar, double valor) {
+        Saque sq = new Saque();
+        bb.clientes = sq.fazerSaque(bb, numeroContaSacar, valor);
+
+        Deposito dp = new Deposito();
+        bb.clientes = dp.fazerDeposito(bb, numeroContaDepositar, valor);
+    }
+
+    public void abrirConta(int conta, int numeroCliente) {
+        Cliente cliente = new Cliente(conta, numeroCliente);
+        bb.clientes.add(cliente);
     }
 
     public Conta getNumeroConta(int numeroConta) {
@@ -132,6 +201,8 @@ public class Banco {
         return clientes;
     }
 
-
+    public void fecharPrograma() {
+        System.exit(0);
+    }
 
 }
