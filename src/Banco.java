@@ -1,3 +1,16 @@
+/*
+     Este projeto foi desenvolvido por mim assistido pelo Chat GPT da OpenAI,
+     Quase todas as classes tem trechos de código desenvolvidos pelo Chat GPT
+     sob minha orientação. As idéias do projeto são minhas, as classes que
+     estão dentro do pacote model também mas com alguns métodos desenvolvidos
+     pelo Chat GPT. Muitas das expressões lambda foram montadas sob minha so-
+     licitação e orientação, ou seja, caracterizei o que as streans e as ex-
+     pressões lambda teriam que fazer e o Chat GPT implementou. Eu conferi
+     o funcionamento do sistema, testando e usando o auxílio do Chat GPT.
+ */
+
+
+
 import model.Cliente;
 import model.Conta;
 
@@ -11,7 +24,7 @@ import java.util.Optional;
 public class Banco {
 
     public List<Cliente> clientes;
-
+    private final int PRIMEIRO_CLIENTE = 1;
     public static Banco bb;
 
     public Banco() {
@@ -20,10 +33,13 @@ public class Banco {
 
     }
 
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
     public static void main(String[] args) {
 
         bb = new Banco();
-
         bb.menuOpcoes();
 
     }
@@ -153,32 +169,43 @@ public class Banco {
                         JOptionPane.showInputDialog(
                                 null,
                                 "Digite o número da conta: "));
-                nomeCliente = JOptionPane.showInputDialog(null, "Digite o nome do cliente:");
+
 
             } catch (Exception erro){
                 System.out.println("Errrrroooooo...: " + erro.toString());
             }
 
-            if (auxNumeroCliente != 0 && auxConta !=0) {
+            if (auxConta !=0) {
                 numeroCliente = auxNumeroCliente;
                 conta = auxConta;
             } else return;
 
-            boolean contaExiste = bb.clientes.stream()
-                    .flatMap(cliente -> cliente.getContas().stream())
-                    .anyMatch(c -> c.getNumeroConta() == conta);
-
             boolean numeroClienteExiste = bb.clientes.stream()
                     .anyMatch(cliente -> cliente.getNumeroCliente() == numeroCliente);
 
+            boolean contaExiste;
+
+            if (!numeroClienteExiste) {
+                contaExiste = false;
+                nomeCliente = JOptionPane.showInputDialog(
+                        null,
+                        "Digite o nome do cliente:");
+            } else  {
+                contaExiste = bb.clientes.stream()
+                        .flatMap(cliente -> cliente.getContas().stream())
+                        .anyMatch(c -> c.getNumeroConta() == conta);
+            }
+
+
+
             if (contaExiste) {
                 JOptionPane.showMessageDialog(null, "Conta já existe.", "Erro", JOptionPane.ERROR_MESSAGE);
-            } else if (numeroClienteExiste) {
+            } else if (numeroClienteExiste && numeroCliente != 0) {
                 bb.abrirConta(conta, numeroCliente);
             } else {
                 bb.criarCliente(nomeCliente);
                 int auxDoisNumeroCliente = 0;
-                bb.abrirConta(conta, numeroCliente);
+                bb.abrirConta(conta, PRIMEIRO_CLIENTE);
                 System.out.println("Chego-oooou 3!!!");
             }
 
@@ -227,39 +254,15 @@ public class Banco {
     }
 
     public void criarCliente(String nomeCliente) {
-        // TODO aqui aqui aqui
         Cliente cliente = new Cliente(nomeCliente);
         bb.clientes.add(cliente);
     }
 
     public void abrirConta(int conta, int numeroCliente) {
-        clientes.stream()
+        bb.clientes.stream()
             .filter(cliente -> cliente.getNumeroCliente() == numeroCliente)
             .findFirst()
             .ifPresent(cliente -> cliente.getContas().add(new Conta(conta)));
-    }
-
-    public Conta getNumeroConta(int numeroConta) {
-        for (Cliente cliente : clientes) {
-            Optional<Conta> contaOptional = cliente.getContas().stream()
-                    .filter(conta -> conta.getNumeroConta() == numeroConta)
-                    .findFirst();
-            if (contaOptional.isPresent()) {
-                return contaOptional.get();
-            }
-        }
-        return null; // Retorna null se a conta não for encontrada
-    }
-
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    // Método para verificar se existe um cliente com o número de conta especificado
-    public boolean existeClienteComNumeroConta(int numeroConta) {
-        return clientes.stream()
-                .flatMap(cliente -> cliente.getContas().stream())
-                .anyMatch(conta -> conta.getNumeroConta() == numeroConta);
     }
 
     public void fecharPrograma() {
