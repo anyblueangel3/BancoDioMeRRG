@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Cliente {
 
-    public static int numeroCliente = 1;
+    public static int numeroCliente = 0;
+    private int numeroCliente2;
     private List<Conta> contas;
     private String nomeCliente;
 
@@ -13,6 +14,8 @@ public class Cliente {
         this.contas = new ArrayList<>();
         this.nomeCliente = nomeCliente;
         this.numeroCliente++;
+        this.numeroCliente2 = this.numeroCliente;
+        System.out.println("numeroCliente: " + this.numeroCliente);
     }
 
     public List<Conta> getContas() {
@@ -21,6 +24,10 @@ public class Cliente {
 
     public int getNumeroCliente() {
         return this.numeroCliente;
+    }
+
+    public int getNumeroCliente2() {
+        return this.numeroCliente2;
     }
 
     public String getNomeCliente() {

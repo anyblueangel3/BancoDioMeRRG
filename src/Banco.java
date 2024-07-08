@@ -7,6 +7,12 @@
      licitação e orientação, ou seja, caracterizei o que as streans e as ex-
      pressões lambda teriam que fazer e o Chat GPT implementou. Eu conferi
      o funcionamento do sistema, testando e usando o auxílio do Chat GPT.
+
+     Hávia dito que usaria integralmente as classes do projeto que está no
+     GitHub no endereço <https://github.com/falvojr/lab-banco-digital-oo> mas
+     teria muitas dificuldades em fazer as rotinas de entrada de dados e criação
+     das contas de forma que resolvi aproveitar muitos atributos e criar minhas
+     próprias classes. Porém o projeto serviu de referência.
  */
 
 
@@ -49,7 +55,7 @@ public class Banco {
         // Cria a janela principal
         JFrame frame = new JFrame("Menu de Opções");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        frame.setSize(400, 350);
         frame.setLocationRelativeTo(null); // Centraliza a janela na tela
 
         // Cria um painel para os botões usando BoxLayout
@@ -63,8 +69,9 @@ public class Banco {
         JButton btnSacar = new JButton("2 - Sacar");
         JButton btnTransferir = new JButton("3 - Transferir");
         JButton btnAbrirConta = new JButton("4 - Abrir conta");
-        JButton btnRelatorio = new JButton("5 - Relatório de Lançamentos"); // feito por extraterrestre
+        JButton btnRelatorio = new JButton("5 - Relatório de lançamentos"); // feito por extraterrestre
         JButton btnFecharPrograma = new JButton("6 - Fechar programa");
+        JButton btnRelatorio2 = new JButton("7 - Relatório de clientes");
 
         // Adiciona ação aos botões
         btnDepositar.addActionListener(e -> {
@@ -181,7 +188,7 @@ public class Banco {
             } else return;
 
             boolean numeroClienteExiste = bb.clientes.stream()
-                    .anyMatch(cliente -> cliente.getNumeroCliente() == numeroCliente);
+                    .anyMatch(cliente -> cliente.getNumeroCliente2() == numeroCliente);
 
             boolean contaExiste;
 
@@ -212,6 +219,7 @@ public class Banco {
         });
 
         btnRelatorio.addActionListener(e -> RelatorioLancamentos.gerarRelatorio(bb));
+        btnRelatorio2.addActionListener(e -> RelatorioClientes.gerarRelatorio(bb));
 
         btnFecharPrograma.addActionListener(e -> fecharPrograma());
 
@@ -227,6 +235,8 @@ public class Banco {
         panel.add(btnRelatorio);                           // feito por extraterrestre
         panel.add(Box.createVerticalStrut(10));
         panel.add(btnFecharPrograma);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(btnRelatorio2);
 
         // Adiciona o painel à janela
         frame.getContentPane().add(panel);

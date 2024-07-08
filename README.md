@@ -24,3 +24,19 @@ claro;
 
 5 Incluir o botão listar lançamentos com saldo.
 
+## Comentário que diz a origem e as contribuições para a execução deste projeto
+     Este projeto foi desenvolvido por mim assistido pelo Chat GPT da OpenAI,
+     Quase todas as classes tem trechos de código desenvolvidos pelo Chat GPT
+     sob minha orientação. As idéias do projeto são minhas, as classes que
+     estão dentro do pacote model também mas com alguns métodos desenvolvidos
+     pelo Chat GPT. Muitas das expressões lambda foram montadas sob minha so-
+     licitação e orientação, ou seja, caracterizei o que as streans e as ex-
+     pressões lambda teriam que fazer e o Chat GPT implementou. Eu conferi
+     o funcionamento do sistema, testando e usando o auxílio do Chat GPT.
+
+     Hávia dito que usaria integralmente as classes do projeto que está no
+     GitHub no endereço <https://github.com/falvojr/lab-banco-digital-oo> mas
+     teria muitas dificuldades em fazer as rotinas de entrada de dados e criação
+     das contas de forma que resolvi aproveitar muitos atributos e criar minhas
+     próprias classes. Porém o projeto serviu de referência.
+
