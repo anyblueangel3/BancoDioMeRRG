@@ -1,6 +1,6 @@
 ## Problemas na implementação
 
-É necessário implementar um método que faço lançamento
+É necessário implementar um método que faça o lançamento
 de todos as transações (depósito, saque, transferência).
 
 Preciso padronizar os nomes das variáveis em todo projeto.
