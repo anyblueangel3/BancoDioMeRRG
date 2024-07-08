@@ -13,6 +13,7 @@ public class Conta {
         setNumeroConta(numeroConta);
         setSaldo(0);
         this.lancamentos = new ArrayList<>();
+        System.out.println("Chegoo-o-ooou 2");                                                          // debugando
     }
 
     public int getNumeroConta() {

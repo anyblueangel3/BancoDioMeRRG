@@ -135,16 +135,20 @@ public class Banco {
 
             final int numeroCliente;
             final int conta;
+            String auxZeroNumeroCliente = "";
             int auxNumeroCliente = 0;
             int auxConta = 0;
             String nomeCliente = "";
 
             try {
 
-                auxNumeroCliente = Integer.parseInt(
-                        JOptionPane.showInputDialog(
+                auxZeroNumeroCliente = JOptionPane.showInputDialog(
                                 null,
-                                "Digite o número do cliente: "));
+                                "Digite o número do cliente: ");
+
+                if(auxZeroNumeroCliente.equalsIgnoreCase("")) auxNumeroCliente = 0;
+                else auxNumeroCliente = Integer.parseInt(auxZeroNumeroCliente);
+
                 auxConta = Integer.parseInt(
                         JOptionPane.showInputDialog(
                                 null,
@@ -174,7 +178,8 @@ public class Banco {
             } else {
                 bb.criarCliente(nomeCliente);
                 int auxDoisNumeroCliente = 0;
-                bb.abrirConta(conta, auxDoisNumeroCliente);
+                bb.abrirConta(conta, numeroCliente);
+                System.out.println("Chego-oooou 3!!!");
             }
 
         });

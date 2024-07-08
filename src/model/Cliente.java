@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Cliente {
 
-    public static int numeroCliente = 0;
+    public static int numeroCliente = 1;
     private List<Conta> contas;
     private String nomeCliente;
 
