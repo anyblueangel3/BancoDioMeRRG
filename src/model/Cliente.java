@@ -12,7 +12,7 @@ public class Cliente {
     public Cliente(String nomeCliente) {
         this.contas = new ArrayList<>();
         this.nomeCliente = nomeCliente;
-        this.numeroCliente += 1;
+        this.numeroCliente++;
     }
 
     public List<Conta> getContas() {
@@ -21,6 +21,10 @@ public class Cliente {
 
     public int getNumeroCliente() {
         return this.numeroCliente;
+    }
+
+    public String getNomeCliente() {
+        return this.nomeCliente;
     }
 
 }

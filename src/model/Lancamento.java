@@ -32,4 +32,8 @@ public class Lancamento {
         return this.numeroLancamento;
     }
 
+    public int getTipoLancamento() {
+        return this.tipoLancamento;
+    }
+
 }

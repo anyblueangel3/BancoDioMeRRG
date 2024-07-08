@@ -47,7 +47,8 @@ public class Banco {
         JButton btnSacar = new JButton("2 - Sacar");
         JButton btnTransferir = new JButton("3 - Transferir");
         JButton btnAbrirConta = new JButton("4 - Abrir conta");
-        JButton btnFecharPrograma = new JButton("5 - Fechar programa");
+        JButton btnRelatorio = new JButton("5 - Relatório de Lançamentos"); // feito por extraterrestre
+        JButton btnFecharPrograma = new JButton("6 - Fechar programa");
 
         // Adiciona ação aos botões
         btnDepositar.addActionListener(e -> {
@@ -100,17 +101,22 @@ public class Banco {
             double valor = 0;
 
             try {
-                contaSacado = Integer
-                        .parseInt(JOptionPane.showInputDialog
-                                (null, "Digite o número da conta do cliente que será sacado: "));
 
-                contaCreditado = Integer
-                        .parseInt(JOptionPane.showInputDialog
-                                (null, "Digite o número da conta do cliente que será creditado: "));
+                contaSacado = Integer.parseInt(
+                        JOptionPane.showInputDialog(
+                        null,
+                        "Digite o número da conta do cliente que será sacado: "));
 
-                valor = Double
-                        .parseDouble(JOptionPane.showInputDialog
-                                (null, "Digite o valor da Transferência: "));
+                contaCreditado = Integer.parseInt(
+                        JOptionPane.showInputDialog(
+                        null,
+                        "Digite o número da conta do cliente que será creditado: "));
+
+                valor = Double.parseDouble(
+                        JOptionPane.showInputDialog(
+                        null,
+                        "Digite o valor da Transferência: "));
+
             } catch (Exception erro) {
                 System.out.println("Errrrroooooo...: " + erro.toString());
             }
@@ -134,9 +140,17 @@ public class Banco {
             String nomeCliente = "";
 
             try {
-                auxNumeroCliente = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número do cliente: "));
-                auxConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número da conta: "));
+
+                auxNumeroCliente = Integer.parseInt(
+                        JOptionPane.showInputDialog(
+                                null,
+                                "Digite o número do cliente: "));
+                auxConta = Integer.parseInt(
+                        JOptionPane.showInputDialog(
+                                null,
+                                "Digite o número da conta: "));
                 nomeCliente = JOptionPane.showInputDialog(null, "Digite o nome do cliente:");
+
             } catch (Exception erro){
                 System.out.println("Errrrroooooo...: " + erro.toString());
             }
@@ -165,6 +179,8 @@ public class Banco {
 
         });
 
+        btnRelatorio.addActionListener(e -> RelatorioLancamentos.gerarRelatorio(bb));
+
         btnFecharPrograma.addActionListener(e -> fecharPrograma());
 
         // Adiciona os botões ao painel com uma linha vazia entre eles
@@ -175,6 +191,8 @@ public class Banco {
         panel.add(btnTransferir);
         panel.add(Box.createVerticalStrut(10));
         panel.add(btnAbrirConta);
+        panel.add(Box.createVerticalStrut(10));     // feito por extraterrestre
+        panel.add(btnRelatorio);                           // feito por extraterrestre
         panel.add(Box.createVerticalStrut(10));
         panel.add(btnFecharPrograma);
 
