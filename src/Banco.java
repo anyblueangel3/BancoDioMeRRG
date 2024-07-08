@@ -115,7 +115,7 @@ public class Banco {
                 System.out.println("Errrrroooooo...: " + erro.toString());
             }
 
-            if(contaSacado != 0 && contaCreditado !=) {
+            if(contaSacado != 0 && contaCreditado != 0) {
                 transferir(contaSacado, contaCreditado, valor);
             } else { JOptionPane.showMessageDialog(null,
                     "Número de conta inválido.",
@@ -127,19 +127,42 @@ public class Banco {
 
         btnAbrirConta.addActionListener(e -> {
 
-            int numeroCliente = 0
-            int conta = 0;
+            final int numeroCliente;
+            final int conta;
+            int auxNumeroCliente = 0;
+            int auxConta = 0;
             String nomeCliente = "";
 
             try {
-                numeroCliente = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número do cliente: "));
-                conta = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número da conta: "));
+                auxNumeroCliente = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número do cliente: "));
+                auxConta = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o número da conta: "));
                 nomeCliente = JOptionPane.showInputDialog(null, "Digite o nome do cliente:");
             } catch (Exception erro){
                 System.out.println("Errrrroooooo...: " + erro.toString());
             }
 
-            abrirConta(conta, numeroCliente);
+            if (auxNumeroCliente != 0 && auxConta !=0) {
+                numeroCliente = auxNumeroCliente;
+                conta = auxConta;
+            } else return;
+
+            boolean contaExiste = bb.clientes.stream()
+                    .flatMap(cliente -> cliente.getContas().stream())
+                    .anyMatch(c -> c.getNumeroConta() == conta);
+
+            boolean numeroClienteExiste = bb.clientes.stream()
+                    .anyMatch(cliente -> cliente.getNumeroCliente() == numeroCliente);
+
+            if (contaExiste) {
+                JOptionPane.showMessageDialog(null, "Conta já existe.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } else if (numeroClienteExiste) {
+                bb.abrirConta(conta, numeroCliente);
+            } else {
+                bb.criarCliente(nomeCliente);
+                int auxDoisNumeroCliente = 0;
+                bb.abrirConta(conta, auxDoisNumeroCliente);
+            }
+
         });
 
         btnFecharPrograma.addActionListener(e -> fecharPrograma());
@@ -180,9 +203,17 @@ public class Banco {
         bb.clientes = dp.fazerDeposito(bb, numeroContaDepositar, valor);
     }
 
-    public void abrirConta(int conta, int numeroCliente) {
-        Cliente cliente = new Cliente(conta, numeroCliente);
+    public void criarCliente(String nomeCliente) {
+        // TODO aqui aqui aqui
+        Cliente cliente = new Cliente(nomeCliente);
         bb.clientes.add(cliente);
+    }
+
+    public void abrirConta(int conta, int numeroCliente) {
+        clientes.stream()
+            .filter(cliente -> cliente.getNumeroCliente() == numeroCliente)
+            .findFirst()
+            .ifPresent(cliente -> cliente.getContas().add(new Conta(conta)));
     }
 
     public Conta getNumeroConta(int numeroConta) {
@@ -199,6 +230,13 @@ public class Banco {
 
     public List<Cliente> getClientes() {
         return clientes;
+    }
+
+    // Método para verificar se existe um cliente com o número de conta especificado
+    public boolean existeClienteComNumeroConta(int numeroConta) {
+        return clientes.stream()
+                .flatMap(cliente -> cliente.getContas().stream())
+                .anyMatch(conta -> conta.getNumeroConta() == numeroConta);
     }
 
     public void fecharPrograma() {

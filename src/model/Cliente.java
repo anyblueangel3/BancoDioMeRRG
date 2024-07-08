@@ -7,16 +7,20 @@ public class Cliente {
 
     public static int numeroCliente = 0;
     private List<Conta> contas;
-    private String nome;
+    private String nomeCliente;
 
-    public Cliente(int conta, String nome) {
+    public Cliente(String nomeCliente) {
         this.contas = new ArrayList<>();
-        this.nome = nome;
+        this.nomeCliente = nomeCliente;
         this.numeroCliente += 1;
     }
 
     public List<Conta> getContas() {
-        return contas;
+        return this.contas;
+    }
+
+    public int getNumeroCliente() {
+        return this.numeroCliente;
     }
 
 }
