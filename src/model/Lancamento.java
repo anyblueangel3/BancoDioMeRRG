@@ -8,8 +8,8 @@ public class Lancamento {
 
     public Lancamento(int tipoLancamento, double valorLancamento) {
         numeroLancamento++;
-        setTipoLancamento(tipoLancamento);
-        setValor(valorLancamento);
+        this.tipoLancamento = tipoLancamento;
+        this.valorLancamento = valorLancamento;
     }
 
     public void setValor(double valorLancamento) {

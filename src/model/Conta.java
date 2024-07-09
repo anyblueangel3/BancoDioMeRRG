@@ -10,8 +10,8 @@ public class Conta {
     private List<Lancamento> lancamentos;
 
     public Conta(int numeroConta) {
-        setNumeroConta(numeroConta);
-        setSaldo(0);
+        this.numeroConta = numeroConta;
+        this.saldo = 0;
         this.lancamentos = new ArrayList<>();
         System.out.println("Chegoo-o-ooou 2");                                                          // debugando
     }
