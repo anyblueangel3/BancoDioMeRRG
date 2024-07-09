@@ -171,6 +171,11 @@ public class Banco {
                 if(auxNumeroCliente.equals("")) auxNumeroCliente = "0";
 
                 numeroCliente = Integer.parseInt(auxNumeroCliente);
+                System.out.println("*****************************");
+                System.out.println("auxNumeroCliente:" + auxNumeroCliente);
+                System.out.println("numeroCliente:" + numeroCliente);
+                System.out.println("***************************");
+
 
                 auxConta = JOptionPane.showInputDialog(
                         null,
@@ -186,17 +191,18 @@ public class Banco {
 
             if (conta == 0) return;
 
+            int[] auxDoisNumeroCliente = new int[] { numeroCliente };
+
             boolean numeroClienteExiste = bb.clientes.stream()
-                    .anyMatch((cliente) -> cliente.getNumeroCliente2() == numeroCliente);
+                    .anyMatch((cliente) -> cliente.getNumeroCliente2() == auxDoisNumeroCliente[0]);
 
             boolean contaExiste;
 
-            {
-                final int auxDoisConta = conta;
-                contaExiste = bb.clientes.stream()
-                        .flatMap(cliente -> cliente.getContas().stream())
-                        .anyMatch(c -> c.getNumeroConta() == auxDoisConta);
-            }
+            int[] auxDoisConta = new int[] { conta };
+
+            contaExiste = bb.clientes.stream()
+                    .flatMap(cliente -> cliente.getContas().stream())
+                    .anyMatch(c -> c.getNumeroConta() == auxDoisConta[0]);
 
             if (!numeroClienteExiste && !contaExiste) {
                 nomeCliente = JOptionPane.showInputDialog(
@@ -209,16 +215,21 @@ public class Banco {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
             }
 
             if (contaExiste) {
                 JOptionPane.showMessageDialog(null, "Conta já existe.", "Erro", JOptionPane.ERROR_MESSAGE);
             } else if (numeroClienteExiste && numeroCliente != 0) {
+                numeroCliente = bb.clientes.stream()
+                        .filter(cliente -> cliente.getContas().stream()
+                                .anyMatch(c -> c.getNumeroConta() == auxDoisConta[0]))
+                        .mapToInt(Cliente::getNumeroCliente2)
+                        .findFirst()
+                        .orElse(0);
                 bb.abrirConta(conta, numeroCliente);
             } else {
-                int auxDoisNumeroCliente = bb.criarCliente(nomeCliente);
-                bb.abrirConta(conta, PRIMEIRO_CLIENTE);
+                numeroCliente = bb.criarCliente(nomeCliente);
+                bb.abrirConta(conta, numeroCliente);
                 System.out.println("Chego-oooou 3!!!");
             }
 
@@ -272,6 +283,12 @@ public class Banco {
     public int criarCliente(String nomeCliente) {
         Cliente cliente = new Cliente(nomeCliente);
         bb.clientes.add(cliente);
+        JOptionPane.showMessageDialog(null,
+                "Esse cliente acaba de ser criado: "
+                        + cliente.getNumeroCliente2(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE);
+        
         return cliente.getNumeroCliente2();
     }
 
