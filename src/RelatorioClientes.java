@@ -18,8 +18,13 @@ public class RelatorioClientes {
         textArea.setEditable(false);
 
         for (Cliente cliente : banco.getClientes()) {
-            textArea.append("Número Conta: " + cliente.getNumeroCliente2()+
-                    ", Nome Cliente: " + cliente.getNomeCliente()+"\n");
+            textArea.append("Número Cliente: " + cliente.getNumeroCliente2()
+                    + ", Nome Cliente: " + cliente.getNomeCliente()
+                    + "\n");
+            for(Conta conta : cliente.getContas()) {
+                textArea.append(" Conta: " + conta.getNumeroConta()
+                        +" Saldo: " + conta.getSaldo()+ "\n" );
+            }
         }
 
         JScrollPane scrollPane = new JScrollPane(textArea);

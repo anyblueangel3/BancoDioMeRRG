@@ -30,7 +30,6 @@ import java.util.Optional;
 public class Banco {
 
     private List<Cliente> clientes;
-    private final int PRIMEIRO_CLIENTE = 1;
     public static Banco bb;
 
     public Banco() {
@@ -171,11 +170,6 @@ public class Banco {
                 if(auxNumeroCliente.equals("")) auxNumeroCliente = "0";
 
                 numeroCliente = Integer.parseInt(auxNumeroCliente);
-                System.out.println("*****************************");
-                System.out.println("auxNumeroCliente:" + auxNumeroCliente);
-                System.out.println("numeroCliente:" + numeroCliente);
-                System.out.println("***************************");
-
 
                 auxConta = JOptionPane.showInputDialog(
                         null,
@@ -220,17 +214,10 @@ public class Banco {
             if (contaExiste) {
                 JOptionPane.showMessageDialog(null, "Conta já existe.", "Erro", JOptionPane.ERROR_MESSAGE);
             } else if (numeroClienteExiste && numeroCliente != 0) {
-                numeroCliente = bb.clientes.stream()
-                        .filter(cliente -> cliente.getContas().stream()
-                                .anyMatch(c -> c.getNumeroConta() == auxDoisConta[0]))
-                        .mapToInt(Cliente::getNumeroCliente2)
-                        .findFirst()
-                        .orElse(0);
                 bb.abrirConta(conta, numeroCliente);
             } else {
                 numeroCliente = bb.criarCliente(nomeCliente);
                 bb.abrirConta(conta, numeroCliente);
-                System.out.println("Chego-oooou 3!!!");
             }
 
         });
@@ -283,66 +270,15 @@ public class Banco {
     public int criarCliente(String nomeCliente) {
         Cliente cliente = new Cliente(nomeCliente);
         bb.clientes.add(cliente);
-        JOptionPane.showMessageDialog(null,
-                "Esse cliente acaba de ser criado: "
-                        + cliente.getNumeroCliente2(),
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
-        
         return cliente.getNumeroCliente2();
     }
 
-//    public void abrirConta(int conta, int numeroCliente) {
-//        Conta objetoConta = new Conta(conta);
-//
-//        System.out.println("Veja se localiza o problema?");
-//        System.out.println("-------------------------------------");
-//        System.out.println("Número da conta: " + objetoConta.getNumeroConta());
-//        System.out.println("Saldo da conta: " + objetoConta.getSaldo());
-//
-//        bb.clientes.stream()
-//            .filter(cliente -> cliente.getNumeroCliente() == numeroCliente)
-//            .findFirst()
-//            .ifPresent(cliente -> cliente.getContas().add(objetoConta));
-//
-//        for(Cliente cliente : bb.getClientes()) {
-//            System.out.println("Cliente: "
-//                    + cliente.getNomeCliente()
-//                    + " Número do cliente: "
-//                    + cliente.getNumeroCliente2());
-//            for(Conta contaFor: cliente.getContas()) {
-//                System.out.println("       Conta número: " + contaFor.getNumeroConta());
-//            }
-//        }
-//
-//        System.out.println("O problema está aqui. Aqui está o problema." +
-//                " Você está olhando para ele. Enxergue!");
-//    }
-
     public void abrirConta(int conta, int numeroCliente) {
-        System.out.println(String.format("Abrindo conta... numero: %d cliente: %d", conta, numeroCliente));
-        Optional<Cliente> clienteOptional = bb.clientes.stream()
-                .filter(cliente -> cliente.getNumeroCliente() == numeroCliente)
-                .findFirst();
-
-        if (clienteOptional.isPresent()) {
-            Cliente cliente = clienteOptional.get();
-            cliente.getContas().add(new Conta(conta));
-            System.out.println("Conta adicionada: " + conta + " ao cliente: " + numeroCliente);
-        } else {
-            System.out.println("Cliente não encontrado: " + numeroCliente);
-        }
-
         for(Cliente cliente : bb.getClientes()) {
-            System.out.println("Cliente: "
-                    + cliente.getNomeCliente()
-                    + " Número do cliente: "
-                    + cliente.getNumeroCliente2());
-            for(Conta contaFor: cliente.getContas()) {
-                System.out.println("       Conta número: " + contaFor.getNumeroConta());
+            if (numeroCliente == cliente.getNumeroCliente2()) {
+                cliente.getContas().add(new Conta(conta));
             }
         }
-
     }
 
     public void fecharPrograma() {

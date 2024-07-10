@@ -19,13 +19,12 @@ public class RelatorioLancamentos {
 
         for (Cliente cliente : banco.getClientes()) {
             for (Conta conta : cliente.getContas()) {
+                textArea.append("Nome Cliente: " + cliente.getNomeCliente() +
+                        ", Número Conta: " + conta.getNumeroConta() + "\n");
                 for (Lancamento lancamento : conta.getLancamentos()) {
-                    String tipoLancamento = lancamento.getTipoLancamento() == 1 ? "Depósito" : "Saque";
-                    textArea.append("Nome Cliente: " + cliente.getNomeCliente() +
-                            ", Número Conta: " + conta.getNumeroConta() +
-                            ", Número Lançamento: " + lancamento.getNumeroLancamento() +
+                    textArea.append("Número Lançamento: " + lancamento.getNumeroLancamento2() +
                             ", Valor Lançamento: " + lancamento.getValorLancamento() +
-                            ", Tipo Lançamento: " + tipoLancamento + "\n");
+                            ", Tipo Lançamento: " + lancamento.getTipoLancamento() + "\n");
                 }
             }
         }

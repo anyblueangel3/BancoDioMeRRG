@@ -3,13 +3,19 @@ package model;
 public class Lancamento {
 
     private static int numeroLancamento = 0;
+    private int numeroLancamento2;
     private int tipoLancamento; // 1 para deposito
     private double valorLancamento;
 
     public Lancamento(int tipoLancamento, double valorLancamento) {
-        numeroLancamento++;
+        this.numeroLancamento++;
+        this.numeroLancamento2 = this.numeroLancamento;
         this.tipoLancamento = tipoLancamento;
         this.valorLancamento = valorLancamento;
+    }
+
+    public int getNumeroLancamento2() {
+        return this.numeroLancamento2;
     }
 
     public void setValor(double valorLancamento) {

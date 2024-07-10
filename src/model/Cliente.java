@@ -15,7 +15,6 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
         this.numeroCliente++;
         this.numeroCliente2 = this.numeroCliente;
-        System.out.println("numeroCliente: " + this.numeroCliente);
     }
 
     public List<Conta> getContas() {
