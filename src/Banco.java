@@ -145,7 +145,8 @@ public class Banco {
 
             if(contaSacado != 0 && contaCreditado != 0) {
                 transferir(contaSacado, contaCreditado, valor);
-            } else { JOptionPane.showMessageDialog(null,
+            } else {
+                JOptionPane.showMessageDialog(null,
                     "Número de conta inválido.",
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);

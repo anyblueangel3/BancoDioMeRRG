@@ -3,7 +3,9 @@ import model.Conta;
 import model.Lancamento;
 
 import javax.swing.*;
-        import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 import java.util.Optional;
 
 public class Saque {
@@ -17,27 +19,24 @@ public class Saque {
         if (contaOptional.isPresent()) {
             Conta conta = contaOptional.get();
 
-            // Verifica se a conta tem saldo suficiente
-            if (conta.getSaldo() >= valor) {
-                // Cria um novo lançamento de saque
-                Lancamento lancamento = new Lancamento(2, valor); // Tipo 2 para saque
+            // Cria um novo lançamento de saque
+            Lancamento lancamento = new Lancamento(2, valor); // Tipo 2 para saque
 
-                // Adiciona o lançamento à lista de lançamentos da conta
-                conta.getLancamentos().add(lancamento);
+            // Adiciona o lançamento à lista de lançamentos da conta
+            conta.getLancamentos().add(lancamento);
 
-                // Atualiza o saldo da conta
-                double novoSaldo = conta.getSaldo() - valor;
-                conta.setSaldo(novoSaldo);
+            // Atualiza o saldo da conta
+            
+            BigDecimal valor2 = BigDecimal.valueOf(valor).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal saldo = BigDecimal.valueOf(conta.getSaldo()).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal novoSaldoBigDecimal = saldo.subtract(valor2).setScale(2, RoundingMode.HALF_UP);
+            double novoSaldo = novoSaldoBigDecimal.doubleValue();
 
-                // Exibe mensagem de sucesso (opcional)
-                System.out.println("Saque de R$" + valor + " realizado com sucesso.");
-            } else {
-                // Exibe mensagem de saldo insuficiente (opcional)
-                JOptionPane.showMessageDialog(null,
-                        "Saldo insuficiente.",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+            conta.setSaldo(novoSaldo);
+
+            // Exibe mensagem de sucesso (opcional)
+            System.out.println("Saque de R$" + valor + " realizado com sucesso.");
+
         } else {
             // Exibe mensagem de conta não encontrada (opcional)
             JOptionPane.showMessageDialog(null,

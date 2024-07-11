@@ -3,6 +3,8 @@ import model.Conta;
 import model.Lancamento;
 
 import javax.swing.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +26,11 @@ public class Deposito {
             conta.getLancamentos().add(lancamento);
 
             // Atualiza o saldo da conta
-            double novoSaldo = conta.getSaldo() + valor;
+            BigDecimal valor2 = BigDecimal.valueOf(valor).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal saldo = BigDecimal.valueOf(conta.getSaldo()).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal novoSaldoBigDecimal = saldo.add(valor2).setScale(2, RoundingMode.HALF_UP);
+            double novoSaldo = novoSaldoBigDecimal.doubleValue();
+
             conta.setSaldo(novoSaldo);
 
             // Exibe mensagem de sucesso (opcional)

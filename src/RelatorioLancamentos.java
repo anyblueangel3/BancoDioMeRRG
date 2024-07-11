@@ -17,14 +17,17 @@ public class RelatorioLancamentos {
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
 
+        String tipoTexto;
+
         for (Cliente cliente : banco.getClientes()) {
             for (Conta conta : cliente.getContas()) {
                 textArea.append("Nome Cliente: " + cliente.getNomeCliente() +
                         ", Número Conta: " + conta.getNumeroConta() + "\n");
                 for (Lancamento lancamento : conta.getLancamentos()) {
+                    tipoTexto = (lancamento.getTipoLancamento() == 1) ? "depósito" : "saque";
                     textArea.append("Número Lançamento: " + lancamento.getNumeroLancamento2() +
                             ", Valor Lançamento: " + lancamento.getValorLancamento() +
-                            ", Tipo Lançamento: " + lancamento.getTipoLancamento() + "\n");
+                            ", Tipo Lançamento: " + lancamento.getTipoLancamento() +" " + tipoTexto + "\n");
                 }
             }
         }
